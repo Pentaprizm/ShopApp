@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+
+
+<body>
+	<div ng-app="shopApp" ng-controller="shopCtrl" class="container panel panel-default">
+	        
+            <header class="panel-heading ">
+                <h1>
+                    My Shop Lisp. Test ng-App by Yuri Solovyov
+                </h1>
+                <h2>Total shops in database: {{list.length}}</h2>
+            </header>
+        	
+			<div class="panel panel-default">
+				<div class="row">
+					<form name="createShopForm" class="createShopForm" novalidate>
+		            <div class="col-sm-4">
+		            	<input type="text" name="shopName" class="form-control" placeholder="Add shop name" value="" ng-model="shopName" required />
+		            	<p class="alert alert-danger" ng-show="createShopForm.shopName.$touched && createShopForm.shopName.$invalid">Enter shop name</p>
+		            </div>
+		            <div class="col-sm-4">
+		            	<input type="text" name="shopAddress" class="form-control" placeholder="Add address" value="" ng-model="shopAddress" required/>
+		            	<p class="alert alert-danger" ng-show="createShopForm.shopAddress.$touched && createShopForm.shopAddress.$invalid">Enter shop address</p>
+		            </div>
+		            <div class="col-sm-2">
+		            	<input type="text" name="shopWorkTime" class="form-control" placeholder="Add worktime" value="" ng-model="shopWorktime"/>
+		            </div>
+		            <div class="col-sm-2"><button type="submit" ng-disabled="createShopForm.$invalid" class="btn btn-block btn-success" ng-click="addNewShop()">Add shop</button></div>
+		            </form>
+	            </div>
+
+	            
+	        </div>
+
+	        <table class="table table-hover" id="shops-table">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Worktime</th>
+                        <th>Show products</th>
+                        <th>Delete</th>
+                        <th>Map</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="shop in list" ng-mousedown="mouseDownHandler($event)">
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{shop.name}}</td>
+                        <td>{{shop.address}}</td>
+                        <td>{{shop.worktime}}</td>
+                        <td><a class="btn btn-default items-toggle" ng-click="showProducts(shop)" ng-model="shop.clicked">Products</a></td>
+                        <td><span class="glyphicon glyphicon-trash" ng-click="removeShop($index)"></span></td>
+                        <td><span class="glyphicon glyphicon-map-marker" ng-click="setMarker(shop)"></span></td>
+                    </tr>
+                    <tr ng-show="shop.clicked">
+	                    <td colspan="7">
+	                    	<table class="table table-hover products-table">
+	                    		<thead>
+		                    		<th>Product name</th>
+		                    		<th>Product description</th>
+		                    		<th>Remove product</th>
+	                    		</thead>
+	                        	<tr ng-repeat="product in shop.products">
+									<td>{{product.name}}</td>
+									<td>{{product.description}}</td>
+									<td><span class="glyphicon glyphicon-remove-sign" ng-click="removeProduct($index, $parent.$index)"></span></td>
+								</tr>
+								<tr>
+									<table class="table items-edit">
+										<tr><th colspan="3">Add new product</th></tr>
+										<tr><td>Product name</td>
+										<td>Product description</td>
+										<td>Add product</td>
+									</tr>
+									<tr>
+										<td><input ng-model="product.addName" placeholder="Product name"></td>
+										<td><input ng-model="product.addDescription" placeholder="Product description"></td>
+		    							<td><button type="button" class=" btn btn-block btn-info" ng-click="addProduct($index, product)">Add</button></td>
+									</tr>
+									</table>	
+								</tr>
+							</table>
+							
+						</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="googleMap" class="row" style="width:100%; height:500px;"></div>
+	</div>
+	
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
+

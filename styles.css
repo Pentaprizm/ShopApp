@@ -1,0 +1,45 @@
+.glyphicon{
+	font-size: 24px;
+	cursor: pointer;
+}
+div[class *="col-sm"]{
+	margin: 10px auto;
+}
+.panel-default{
+	margin : 10px auto;
+	padding: 0 10px;
+}
+.row{
+	margin: 20px auto;
+}
+#googleMap{
+	margin-left: 0;
+	margin-right: 0;
+
+}
+.products-table strong{
+	text-align: center;	
+}
+
+.createShopForm .ng-valid.ng-dirty{
+	border: 1px solid green;
+}
+
+.alert{
+	margin-top: 10px;
+}
+#shops-table{
+	position: relative;
+}
+#shops-table tbody:hover{
+	cursor: pointer;
+}
+.draggable{
+	display: table;
+	background: lightblue;
+	width: 100%;
+	table-layout: fixed;
+}
+.draggable:hover tr{
+background: lightblue;	
+}
